@@ -17,21 +17,23 @@ spec:
       serviceAccountName: gitlab-runner
       containers:
       - name: gitlab-runner
-        image: gitlab/gitlab-runner:latest  # Use the GitLab Runner image
+        image: gitlab/gitlab-runner:latest
         command: ["/bin/bash", "-c"]
         args:
           - |
             cp /etc/gitlab-runner/config.toml /config/config.toml
             gitlab-runner register \
               --non-interactive \
-              --config /config/config.toml \
-              --name "My GitLab Runner" \
-              --url "https://gitlab.com/" \
-              --registration-token "uwfdgyw2dh21y3y4y74gtdgrfyrol"
+              --config /config/config.toml
         volumeMounts:
         - name: config
           mountPath: /config
+        - name: cacert
+          mountPath: /etc/gitlab-runner/cacert
       volumes:
       - name: config
         configMap:
           name: gitlab-runner-registration
+      - name: cacert
+        secret:
+          secretName: gitlab-runner-cacert
