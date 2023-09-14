@@ -1,0 +1,18 @@
+# registration.yaml (using ConfigMap)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-runner-registration
+  namespace: gitlab-runner
+data:
+  runner-registration.toml: |
+    concurrent = 1
+    check_interval = 0
+
+    [[runners]]
+      name = "My GitLab Runner"
+      url = "https://gitlab.com/"
+      token = "uwfdgyw2dh21y3y4y74gtdgrfyrol"
+      executor = "kubernetes"
+      [runners.kubernetes]
+        namespace = "gitlab-runner"

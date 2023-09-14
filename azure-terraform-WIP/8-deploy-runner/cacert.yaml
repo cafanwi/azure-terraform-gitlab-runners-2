@@ -1,0 +1,9 @@
+# cacert.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-runner-cacert
+  namespace: gitlab-runner
+type: Opaque
+data:
+  ca.crt: BASE64_ENCODED_CA_CERT  # Replace with the base64-encoded CA certificate

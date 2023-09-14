@@ -1,0 +1,37 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab-runner
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner
+    spec:
+      serviceAccountName: gitlab-runner
+      containers:
+      - name: gitlab-runner
+        image: gitlab/gitlab-runner:latest  # Use the GitLab Runner image
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            cp /etc/gitlab-runner/config.toml /config/config.toml
+            gitlab-runner register \
+              --non-interactive \
+              --config /config/config.toml \
+              --name "My GitLab Runner" \
+              --url "https://gitlab.com/" \
+              --registration-token "uwfdgyw2dh21y3y4y74gtdgrfyrol"
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+        configMap:
+          name: gitlab-runner-registration
