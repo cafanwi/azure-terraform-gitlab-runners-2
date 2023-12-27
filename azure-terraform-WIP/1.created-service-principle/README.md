@@ -1,11 +1,11 @@
 project-root/
-├── main.tf
-├── output.tf
-├── secret-service-principle.tf
-├── terraform.tfvars
-├── variables.tf
-├── storage.tf
-├── backend.tf 
+    ├── main.tf
+    ├── output.tf
+    ├── secret-service-principle.tf
+    ├── terraform.tfvars
+    ├── variables.tf
+    ├── storage.tf
+    ├── backend.tf 
 
 run script to signinto azure
 
